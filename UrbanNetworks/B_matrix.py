@@ -150,8 +150,8 @@ def portrait(G):
 	""" return matrix where M[i][j] is the number of starting nodes in G
 	with j nodes in shell i.
 	"""
-	dia = 500 #networkx.diameter(G)
-	N = G.number_of_nodes()
+	dia = networkx.diameter(G) #500
+	N = G.number_of_nodes() #size of graph
 	# B indices are 0...dia x 0...N-1:
 	B = zeros( (dia+1,N) ) 
 	
@@ -193,7 +193,7 @@ def portrait(G):
 			B[max_shell][0] += 1
 			max_shell -= 1
 	
-	return B[:max_path+1,:]
+	return B[:max_path+1,:] #return different slicing of B max_path supposed to be most?
 
 
 if __name__ == '__main__':

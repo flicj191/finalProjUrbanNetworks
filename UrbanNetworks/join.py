@@ -5,25 +5,29 @@ https://macwright.org/2012/10/31/gis-with-python-shapely-fiona.html'''
 from shapely.geometry import LineString, box, shape, mapping
 from shapely.affinity import translate
 from shapely.ops import nearest_points
-import fiona
+import fiona, sys
+from datetime import datetime
 
 #parameters## 
 yoff = 0 #translate up or down -will change which points are joined
-network = "dump/cut.shp"
-network2 = "dump/myshp3.shp"
+network = sys.argv[1] #"cut"
+network2 = sys.argv[2] #"myshp3"
 
-outshp = 'dump/join.shp' #output
+inpath = 'dump/'
+inpath2 = 'dump/'
+outshp = 'dump/combination5'#+network+network2 #output
 
-with fiona.collection(network, "r") as input:
+with fiona.collection(inpath+network+'/'+network+'.shp', "r") as input:
     for feature in input:
         network = shape(feature['geometry'])
         #print shape(feature['geometry'])
 
-with fiona.collection(network2, "r") as input:
+with fiona.collection(inpath2+network2+'/'+network2+'.shp', "r") as input:
     for feature in input:
         network2 = shape(feature['geometry'])
         #print shape(feature['geometry'])
 
+print outshp, datetime.now()
 bboxTuple = network.bounds
 bbox = box(bboxTuple[0],bboxTuple[1],bboxTuple[2],bboxTuple[3],ccw=False)
 #minx, miny, maxx, maxy
@@ -41,7 +45,7 @@ result = network2.union(LineString([(Pts[0].x,Pts[0].y),(Pts[1].x,Pts[1].y)]))
 #union
 result = result.union(network1)
 
-
+print datetime.now(), 'outputting shapefile..'
 #write new shapefile?
 # schema of the shapefile 
 schema = {'geometry': 'MultiLineString','properties': {'test': 'int'}}

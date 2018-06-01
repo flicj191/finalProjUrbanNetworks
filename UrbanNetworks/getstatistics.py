@@ -3,16 +3,14 @@ for final project 2018
 read shapefiles of created networks and get line graph
 print statistics and save to file
 
-create portraits by creating the edgelist file for input into bagrow code
-
 '''
 import networkx as nx
 import snap, csv
 import matplotlib.pyplot as plt
 from datetime import datetime
 ##parameters
-network = 'Axial_d7'
-shp = 'outputs/'+network+ '/' +network+ '.shp'
+network = 'Axial_d6c0204'
+shp = 'dump/cuts/'+network+ '/' +network+ '.shp'
 #files =
 # outputBmatrix = 'dump/'network+'outB.txt'
 
@@ -36,11 +34,11 @@ print nx.number_of_edges(H), 'edges'
 #
 
 #edgelist for portraits - bagrow -command line function
-fout =open('edgelist.txt','wb')
+fout =open('dump/edgelist.txt','wb')
 nx.write_edgelist(Hlabeled,fout, data=False)
 fout.close()
 
-LoadedGraph = snap.LoadEdgeList(snap.PUNGraph, "edgelist.txt", 0, 1, ' ') #'\t'
+LoadedGraph = snap.LoadEdgeList(snap.PUNGraph, "dump/edgelist.txt", 0, 1, ' ') #'\t'
 Triads = snap.GetTriads(LoadedGraph, -1)
 ClustCf = snap.GetClustCf (LoadedGraph, -1)
 print Triads, ClustCf
@@ -56,8 +54,11 @@ dia = nx.diameter(H)
 print dia, datetime.now()
 info = nx.info(H) #Name?
 print info, datetime.now()
+transi = nx.transitivity(H)
+avepath = nx.average_shortest_path_length(H)
+
 fstat.writerow([info])
-fstat.writerow([density,dia,Triads,ClustCf])
+fstat.writerow([dia,Triads,density,ClustCf,transi,avepath])
 #record snap statistics --in csv?
 fs.close()
 print datetime.now()

@@ -2,64 +2,57 @@
 for final project 2018
 read shapefiles of created networks and get line graph
 
-create portraits by creating the edgelist file for input into bagrow code
+create portraits for input into bagrow code 
+and trimming zeros to get subset of graph
+
 
 '''
 import networkx as nx
-
+import sys
 #import matplotlib.pyplot as plt
 from datetime import datetime
 ##parameters
-network = 'Axial_d5'
-shp = 'outputs/'+network+ '/' +network+ '.shp'
-#files =
-outputBmatrix = 'Bmatrices/'+network+'outB.txt'
+network = sys.argv[1] #'Axial_d6Radial_d6_b5' #in folder with shapefile
+shp = network+ '/' +network+ '.shp'
+#files ='alloutputs/'+
+outputBmatrix = './../Bmatrices/subsetB/'+network+'outB.txt'
 
 #read shapefile
 G=nx.read_shp(shp) 
-#G = nx.Graph(day="Friday") #G.graph['day']='Monday'
 G.name = network
 #creates graph
 Gg = nx.Graph(G)
-print nx.number_of_nodes(Gg)
 
 
 #function to convert to representative graph
 H = nx.line_graph(Gg)
 Hlabeled = nx.convert_node_labels_to_integers(H)
-print nx.number_of_edges(H), 'edges'
-H.remove_edges_from(H.selfloop_edges())
-print nx.number_of_edges(H), 'edges'
-print nx.is_connected(H)
-exit()
-print nx.number_of_nodes(H), 'nodes'
-print nx.number_of_edges(H), 'edges'
-
-#edgelist for portraits - bagrow -command line function
-# fout =open('edgelist.txt','wb')
-# nx.write_edgelist(Hlabeled,fout, data=False)
-# fout.close()
-
-# fin = open('edgelist.txt','rb') #use bagrow code
-# Gread = nx.read_edgelist(fin)
-# fin.close()
 
 print datetime.now()
 import B_matrix 
 #use functions generate image and matrix Bagrow code acknowledge..
 	
 B = B_matrix.portrait(Hlabeled)
+import numpy as np
+print B.shape, datetime.now()
+N = B.shape[1]
+# #Btrim = B[:maxval:] #get column index sum is >0
+colsum = np.sum(B,axis=0) #array of sums
 
+for i in np.arange(0,N-1,1): #= 1:N-1
+    if colsum[i]>0:
+        index = i #get index 
+print index, 'max'
+newB = B[:,0:index+1]
+print newB.shape
 try: # plot the portrait with pylab, but I prefer matlab:
     
-    B_matrix.plotMatrix(B, origin=1, logColors=True, fileName='images/'+network+'test')
+    B_matrix.plotMatrix(newB, origin=1, logColors=True, fileName='./../images/subsetB/'+network)
 except ImportError:
     print "pylab failed, no plotting"
     
 print "writing matrix to file...", outputBmatrix
-B_matrix.fileMat(outputBmatrix, B)
-#except:
-    #print "error writing"
+B_matrix.fileMat(outputBmatrix, newB)
 
 print datetime.now()
 

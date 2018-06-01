@@ -1,17 +1,17 @@
 #!/bin/bash
 
-python ./tgrid.py 80 80 6
-python ./creategraph.py 'Tgrid_w80_h80_rm6'
-python ./tgrid.py 80 80 4
-python ./creategraph.py 'Tgrid_w80_h80_rm4'
-python ./tgrid.py 80 80 2
-python ./creategraph.py 'Tgrid_w80_h80_rm2'
-python ./tgrid.py 80 80 8
-python ./creategraph.py 'Tgrid_w80_h80_rm8'
-python ./tgrid.py 60 100 2
-python ./creategraph.py 'Tgrid_w60_h100_rm2'
-python ./tgrid.py 60 100 6
-python ./creategraph.py 'Tgrid_w60_h100_rm6'
+python ./generatenetworks/gridx.py 80 100
+python ./../createportrait.py Tree_d10_b2
+python ./../createportrait.py Tree_d12_b2
+
+# i=1;
+# for d in * ; do
+#     echo "$d"
+#     python ./../createportrait.py "$d"
+#     echo $i
+#     i=$((i+1))
+# done
+
 
 echo "script execution complete"
 

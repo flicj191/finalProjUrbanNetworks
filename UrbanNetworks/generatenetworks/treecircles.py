@@ -8,9 +8,9 @@ Felicity Chun
 from shapely.geometry import Point, LineString, MultiPoint, mapping
 from shapely.ops import unary_union
 import fiona, sys
-
+from datetime import datetime
 # parameters ##
-factor = sys.argv[1] #5
+factor = int(sys.argv[1]) #5
 
 branchamt = float(2) #sys.argv[2] #limit 2 branches for each node *float
 
@@ -67,7 +67,7 @@ while factor > 0:
     ls = outer
     line = tree
     factor -= 1
-    print 'factor: '+str(factor)
+    print 'factor: '+str(factor), datetime.now()
 
 print len(res[0])
 lines = unary_union(line)

@@ -1,18 +1,21 @@
 '''
 to create a grid network for final project
 
-reference stackoverflow sorting tuples
+reference stackoverflow sorting tuples(jupyter)
+
 Felicity Chun
 2018
 '''
+
 import numpy as np
 import itertools, fiona, sys
 from shapely.geometry import Point, LineString, mapping
 from datetime import datetime
+
 #parameters:
 width = int(sys.argv[1])
 height = int(sys.argv[2])
-#savefile
+#savefile name create
 folder = 'outputs/'
 NetType ='grid'
 savefile = folder + NetType +'_w'+str(width)+'_h'+str(height)

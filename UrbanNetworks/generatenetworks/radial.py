@@ -10,8 +10,8 @@ from shapely.ops import nearest_points, split
 import fiona, sys
 
 ##parameters
-depth = 5 #sys.argv[1]
-initBranches = 4 #sys.argv[2]
+depth = int(sys.argv[1])
+initBranches = int(sys.argv[2])
 
 ## save file create
 folder = 'outputs/'
