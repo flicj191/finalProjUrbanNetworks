@@ -2,9 +2,10 @@
 for final project 2018
 read shapefiles of created networks and get line graph
 
-create portraits for input into bagrow code 
+create portraits 
 and trimming zeros to get subset of graph
 
+using code from Bagrow
 
 '''
 import networkx as nx
@@ -12,9 +13,9 @@ import sys
 #import matplotlib.pyplot as plt
 from datetime import datetime
 ##parameters
-network = sys.argv[1] #'Axial_d6Radial_d6_b5' #in folder with shapefile
+network = sys.argv[1] #'Axial_d6Radial_d6_b5'
 shp = network+ '/' +network+ '.shp'
-#files ='alloutputs/'+
+#in folder with shapefile
 outputBmatrix = './../Bmatrices/subsetB/'+network+'outB.txt'
 
 #read shapefile
@@ -23,14 +24,12 @@ G.name = network
 #creates graph
 Gg = nx.Graph(G)
 
-
 #function to convert to representative graph
 H = nx.line_graph(Gg)
 Hlabeled = nx.convert_node_labels_to_integers(H)
 
 print datetime.now()
 import B_matrix 
-#use functions generate image and matrix Bagrow code acknowledge..
 	
 B = B_matrix.portrait(Hlabeled)
 import numpy as np

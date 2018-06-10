@@ -62,7 +62,7 @@ i=0
 incr = 1/float(initBranches)
 while i < 1:
     ptOnRing = ring1.boundary.interpolate(i, normalized=True)
-    ls.append((ptOnRing.x,ptOnRing.y)) #ls points
+    ls.append((ptOnRing.x,ptOnRing.y)) 
     i += incr #parameter
     
 line = LineString()
@@ -83,7 +83,7 @@ while depth > 0:
     print 'depth: '+str(depth)
 
 
-# schema of the shapefile ##create in top cell
+# schema of the shapefile
 schema = {'geometry': 'MultiLineString','properties': {'test': 'int'}}
 with fiona.open(savefile,'w','ESRI Shapefile', schema) as c:
        record = {'geometry':mapping(line), 'properties':{'test':1}}
