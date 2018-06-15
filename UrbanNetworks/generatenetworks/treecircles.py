@@ -1,13 +1,13 @@
 '''
 For creating a branching tree in final project
+Felicity Chun
+2018
 
 adjustments on radial script to create tree growing in circular rings
 using written functions: 
 - createListOuter
 - growtree
 
-Felicity Chun
-2018
 '''
 
 from datetime import datetime

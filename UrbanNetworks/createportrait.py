@@ -2,10 +2,11 @@
 for final project 2018
 read shapefiles of created networks and get line graph
 
-create portraits 
-and trimming zeros to get subset of graph
+create portraits and trimming zeros to get subset of graph
+method for trimming zeros from code in https://github.com/bagrow/portraits
+saves images and bmatrix
 
-using code from Bagrow
+using code from Bagrow (B_matrix.py)
 
 '''
 import networkx as nx
@@ -35,16 +36,17 @@ B = B_matrix.portrait(Hlabeled)
 import numpy as np
 print B.shape, datetime.now()
 N = B.shape[1]
-# #Btrim = B[:maxval:] #get column index sum is >0
+
 colsum = np.sum(B,axis=0) #array of sums
 
-for i in np.arange(0,N-1,1): #= 1:N-1
+for i in np.arange(0,N-1,1): 
     if colsum[i]>0:
         index = i #get index 
 print index, 'max'
 newB = B[:,0:index+1]
 print newB.shape
-try: # plot the portrait with pylab, but I prefer matlab:
+
+try: # plot the portrait with pylab
     
     B_matrix.plotMatrix(newB, origin=1, logColors=True, fileName='./../images/subsetB/'+network)
 except ImportError:

@@ -2,8 +2,11 @@
 For creating a axial network for final project
 Felicity Chun 
 2018
+
+axial graph 
+*adjusted to create each line as separate object
     '''
-#axial graph #recursive
+
 from shapely.geometry import LineString, Point, mapping
 from shapely.ops import unary_union
 from datetime import datetime
@@ -23,7 +26,7 @@ direction = 0
 alongx = True
 network = LineString()
 pnum = math.factorial(factor)
-print math.factorial(factor), datetime.now() #add to function args len(lines.geoms)
+print math.factorial(factor), datetime.now() 
 def drawBranches(factor,length,startPt,direction,alongx,network):
     #print 'running: '+str(length)
     if factor == 0:
@@ -37,8 +40,8 @@ def drawBranches(factor,length,startPt,direction,alongx,network):
             ptx = startPt.x - (length)
             pty = startPt.y - (length)
         
-        if alongx: #define k?  #alternate up and down
-            line = LineString([(startPt), (ptx,startPt.y)]) #alternate x and y for drawing?
+        if alongx: ##alternate up and down
+            line = LineString([(startPt), (ptx,startPt.y)]) 
             alongx = False
         else:
             line = LineString([(startPt), (startPt.x, pty)])
@@ -47,19 +50,14 @@ def drawBranches(factor,length,startPt,direction,alongx,network):
         #network = LineString()
         record = {'geometry':mapping(line), 'properties':{'test':length}}
         c.write(record)
-        #network = network.union(line) #union recursive?? outside
-        # network.append(line)
-        # if len(network)%(pnum/10) == 0:
-        #     print len(network), datetime.now()
         
-
         ptls = [] #list of point objects interpolated along line by factor
         i = 1.0/(factor+1)
         while i < 0.99:
             pt = line.interpolate(i, normalized=True)
             ptls.append(pt)
-            i = i+ (1.0/(factor+1)) #order?
-            #print i
+            i = i+ (1.0/(factor+1)) 
+            
         #print ptls
         
         if factor%2 == 0:
@@ -68,25 +66,20 @@ def drawBranches(factor,length,startPt,direction,alongx,network):
             length = length*0.8
         #print length
         factor -= 1
-        #k=0 #outside function? direction
+        
         for pt in ptls:
             #draw lines for each point
             direction+=1
             network = network.union(drawBranches(factor, length, pt, direction, alongx, network)) 
-            # not for each point
-            #network += drawBranches(factor,length, pt, direction, alongx, network)
+
             
-        #network = line.union(lines)
         return network
 
-#network =  network.union(line)#??
-# schema of the shapefile ##create in top cell
+
+# schema of the shapefile 
 schema = {'geometry': 'MultiLineString','properties': {'test': 'int'}}
 c = fiona.open(savefile,'w','ESRI Shapefile', schema)
 
 line = drawBranches(factor, length, startPt, direction, alongx, network)
-#line = unary_union(lines)
-print datetime.now()
 
-    #    record = {'geometry':mapping(line), 'properties':{'test':1}}
-    #    c.write(record)
+print datetime.now()

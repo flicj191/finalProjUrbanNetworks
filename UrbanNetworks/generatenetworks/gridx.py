@@ -1,10 +1,12 @@
 '''
 to create a grid network for final project
 
-reference stackoverflow sorting tuples(jupyter)
-
 Felicity Chun
 2018
+
+ref:
+create lines from points - https://gis.stackexchange.com/questions/78275/convert-points-to-lines-with-python-gdal
+(using meshgrid and all pair combinations)
 '''
 
 import numpy as np

@@ -1,9 +1,10 @@
 '''
 for final project 2018
 read shapefiles of created networks and get line graph
-print statistics and save to file
+print statistics and save to csv file
+creates primal graph is lineG is set to False
 
-create portraits by creating the edgelist file for input into bagrow code
+create portraits by inputting networkx graph into Bagrow code (B_matrix.py)
 
 '''
 import networkx as nx
@@ -37,12 +38,6 @@ Hlabeled = nx.convert_node_labels_to_integers(H)
 if nx.is_connected(H) == False:
     print 'not connected! ...exit'
     exit()
-
-# alldegs = dict(H.degree()).values() 
-# nodes = nx.number_of_nodes(H) 
-# avedeg = sum(alldegs)/float(nodes)
-# print avedeg, 'avedeg'
-# #exit()
 
 #edgelist for snap
 fout =open('dump/edgelist.txt','wb')
@@ -82,13 +77,14 @@ fstat = csv.writer(fs)
 #degreeHist = nx.degree_histogram(H)
 density = nx.density(H)
 dia = nx.diameter(H)
-#info = nx.info(H) #Name
+#info = nx.info(H) 
 avepath = nx.average_shortest_path_length(H)
 alldegs = dict(H.degree()).values() 
 nodes = nx.number_of_nodes(H) 
 edges = nx.number_of_edges(H)
 avedeg = sum(alldegs)/float(nodes)
 #fstat.writerow([info])
+
 print datetime.now(),"writing statistics"
 fstat.writerow([network,nodes,edges,avedeg,dia,Triads,density,ClustCf,transi,avepath])
 
