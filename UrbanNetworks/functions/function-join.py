@@ -1,6 +1,13 @@
-##join ..
-'''read shapefile 
-https://macwright.org/2012/10/31/gis-with-python-shapely-fiona.html'''
+
+'''
+for final project 2018
+felicity chun
+
+join function
+read shapefile 
+https://macwright.org/2012/10/31/gis-with-python-shapely-fiona.html
+https://shapely.readthedocs.io/en/latest/
+'''
 
 from shapely.geometry import LineString, box, shape, mapping
 from shapely.affinity import translate
@@ -15,7 +22,7 @@ network2 = sys.argv[2] #"myshp3"
 
 inpath = 'dump/'
 inpath2 = 'dump/'
-outshp = 'dump/combination5'#+network+network2 #output
+outshp = 'dump/combination5' #output
 
 with fiona.collection(inpath+network+'/'+network+'.shp', "r") as input:
     for feature in input:

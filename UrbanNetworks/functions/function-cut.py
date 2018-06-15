@@ -1,5 +1,12 @@
-##cut..
+'''
+for final project 2018
+felicity chun
 
+cut function
+
+
+https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.split
+'''
 #get bounding box creates from values counterclockwise
 from shapely.geometry import LineString, box, shape, mapping
 import fiona
@@ -10,7 +17,7 @@ from datetime import datetime
 shpfile = "grid_w40_h80" #input
 inpath ='outputs/'
  
-frac1 = 0.2 #? fraction? between 0 and 1
+frac1 = 0.2 # fraction between 0 and 1
 frac2 = 0.4
 outshp = 'dump/'+shpfile+'c'+ str(frac1).replace('.','') + str(frac2).replace('.','') #out
 
@@ -19,7 +26,7 @@ outshp = 'dump/'+shpfile+'c'+ str(frac1).replace('.','') + str(frac2).replace('.
 with fiona.collection(inpath+shpfile+'/'+shpfile+'.shp', "r") as input:
     for feature in input:
         network = shape(feature['geometry'])
-    #network = #union all lines
+    
 
 #fraction along top line, fraction along side line, draw line between points
 bboxTuple = network.bounds
@@ -32,7 +39,7 @@ distx = bboxTuple[2] - bboxTuple[0]
 in1 = frac1 * disty
 in2 = (frac2 * distx) + disty
 
-#i is between 0-0.5 (diagonal) or 0-0.75? first(0-0.25) second(0.25-0.5)
+
 firstPt = bbox.boundary.interpolate(in1)
 secondPt = bbox.boundary.interpolate(in2)
 cutline = LineString([(firstPt.x,firstPt.y),(secondPt.x,secondPt.y)])
@@ -41,12 +48,11 @@ print shpfile, datetime.now()
 print bbox.wkt
 print cutline.wkt
 #polygon of bounds and cutline
-#replace 2nd point not bufferd with cutline ..then buffer
+
 poly = split(bbox,cutline)[0]
 print poly.wkt
 
-#networkcutpts = network.intersection(cutline)##polygons
-#https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.split
+
 new = split(network,cutline) #split lines by line to get geometry collection
 res = new[0]
 print len(network)
