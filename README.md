@@ -29,7 +29,7 @@ takes an adjacency list and creates dendrogram with numbers and network names in
 - `scripts.sh`
 used to run program multiple times in succession
 
-## distance-matlab
+## UrbanNetworks/distance-matlab
 Matlab files used to create adjacency list file.
 - `createdistList.m`
 Other files from [Bagrow(2008)](https://github.com/bagrow/portraits)
