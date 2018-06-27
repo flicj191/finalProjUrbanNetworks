@@ -3,6 +3,11 @@
 Felicity Chun 2018
 
 scripts are run with conda installation and python2.7 environment
+### Scripts use and flow 
+1. generate a shapefile using the generatenetworks scripts and functions
+2. record statistics, b-matrix using the `creategraph.py` script and inputting the shpaefile
+3. run analysis by measuring distance between b-matrix files in Matlab using `createdistList.m` 
+4. using the output from 3. create dendrogram using `dendrogram.py`
 
 ## UrbanNetworks/generatenetworks
 
